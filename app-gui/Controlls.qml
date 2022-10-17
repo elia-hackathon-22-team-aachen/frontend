@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
+import QtQml.Models 2.15
 
 Rectangle {
 
@@ -122,6 +123,23 @@ Rectangle {
         horizontalAlignment: "AlignHCenter"
         verticalAlignment: "AlignVCenter"
     }
+    Label{
+        x: 15
+        y: 10
+        width:70
+        height:50
+        background:
+            Rectangle{
+                radius: 10
+                color: "#ffdfc7"
+            }
+        text: String.fromCodePoint(0x2261)
+        font.bold: true
+        font.pixelSize: 30
+        color: "#000000"
+        horizontalAlignment: "AlignHCenter"
+        verticalAlignment: "AlignVCenter"
+    }
     Rectangle{
         id:swipeArea
         color: "#00000000"
@@ -133,33 +151,8 @@ Rectangle {
         SwipeView {
             id: swipeView
             anchors.fill: parent
-
-           /* Item {
-                id: firstPage
-                Rectangle{
-                    x:10
-                    y: 10
-                    width: 235
-                    height: 235
-                    color: "#f46c1c"
-                }
-                Rectangle{
-                    x: 255
-                    y: 10
-                    width: 235
-                    height: 480
-                    color: "#1cd2f4"
-                }
-                Rectangle{
-                    x:10
-                    y: 255
-                    width: 235
-                    height: 235
-                    color: "#5aab14"
-                }
-            }*/
             Item {
-                id: secondPage
+                id: firstPage
                 Label{
                     x: 15
                     y: 0
@@ -216,7 +209,6 @@ Rectangle {
                             radius: 10
                             color: parent.down ? "#55f46c1c" : "#fff46c1c"
                         }
-                    //onClicked: minTemp--\
                     onClicked: minTemp--
                     text: "-"
                     font.bold: true
@@ -447,13 +439,128 @@ Rectangle {
                 }
             }
             Item {
-                id: thirdPage
+                id: secondPage
+
+                Button{
+                    x: 15
+                    y: 0
+                    width: 230
+                    height: 40
+                    background:
+                        Rectangle{
+                            radius: 10
+                            color: parent.down ? "#55f46c1c" : "#fff46c1c"
+                        }
+                    text: "Find Friends \u26F9"
+                    font.bold: true
+                }
+                Button{
+                    x: 255
+                    y: 0
+                    width: 230
+                    height: 40
+                    background:
+                        Rectangle{
+                            radius: 10
+                            color: parent.down ? "#55f46c1c" : "#fff46c1c"
+                        }
+                    text: "Send Invite"
+                    font.bold: true
+                }
                 Rectangle{
-                    x:10
-                    y: 10
-                    width: 100
-                    height: 100
-                    color: "#0000ff"
+                    x: 15
+                    y: 60
+                    width: 230
+                    height: 230
+                    color: "#f46c1c"
+                    radius: 10
+                }
+                Image {
+                    x: 15
+                    y: 60
+                    width: 230
+                    source: "https://middleware-eembf4leqa-ew.a.run.app/viz2/71afee9f-a446-456c-a18a-f3406c0b77c8"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                ListView {
+                    x: 255
+                    y: 60
+                    width: 230
+                    height: 470
+                    interactive: false
+                    model:
+                    ListModel {
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                        ListElement {
+                            fName: "Max Musterman"
+                        }
+                    }
+                    delegate:
+                    Rectangle {
+                        Label {
+                            width: 210
+                            height: 30
+                            x: 10
+                            color: "#000000"
+                            horizontalAlignment: "AlignLeft"
+                            verticalAlignment: "AlignVCenter"
+                            text: index + 1 + "."
+                        }
+                        Label {
+                            width: 210
+                            height: 30
+                            x: 40
+                            color: "#000000"
+                            horizontalAlignment: "AlignLeft"
+                            verticalAlignment: "AlignVCenter"
+                            text: fName
+                        }
+                        width: 230
+                        height: 30
+                        color: index % 2 == 0 ? "#ffdfc7" : "#55ffdfc7"
+                    }
+                    Rectangle {
+                        y:300
+                        width: 230
+                        height: 170
+                        color: "#ffdfc7"
+                    }
+                }
+
+                Rectangle{
+                    x: 15
+                    y: 300
+                    width: 230
+                    height: 230
+                    radius: 10
+                    color: "#ffdfc7"
                 }
             }
                 currentIndex: 0

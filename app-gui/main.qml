@@ -7,7 +7,7 @@ ApplicationWindow {
     height: 900
     width: 500
     visible: true
-    title: "kino GUI"
+    title: "Hier koennte ihre werbung stehen"
 
     Loader {
         id: pageLoader
