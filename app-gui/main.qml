@@ -7,7 +7,7 @@ ApplicationWindow {
     height: 900
     width: 500
     visible: true
-    title: "Hier koennte ihre werbung stehen"
+    title: "Heatify"
 
     Loader {
         id: pageLoader

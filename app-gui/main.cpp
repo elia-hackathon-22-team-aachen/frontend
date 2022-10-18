@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
             Qt::QueuedConnection);
     engine.rootContext()->setContextProperty("serverURL", argv[1]);
     engine.rootContext()->setContextProperty("accessToken", argv[2]);
-    engine.rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
     engine.load(url);
 
     return app.exec();

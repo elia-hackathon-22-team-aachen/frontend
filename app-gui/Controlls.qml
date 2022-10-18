@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
 import QtQml.Models 2.15
+import QtCharts 2.3
 
 Rectangle {
 
@@ -9,7 +10,7 @@ Rectangle {
     height: 900
     color: "#ffffff"
 
-    property int herz: 0
+    property int herz: 103
     property int minTemp: 0
     property int maxTemp: 0
     property int prefTemp: 0
@@ -92,10 +93,27 @@ Rectangle {
         id: image
         x: -20
         y: 40
+        z: 201
         width: 540
-        //source: "file:///" + applicationDirPath + "/images/costs.svg"
+        cache: false
         source: "https://middleware-eembf4leqa-ew.a.run.app/viz1/71afee9f-a446-456c-a18a-f3406c0b77c8"
         fillMode: Image.PreserveAspectFit
+        Timer {
+            id: tim
+            interval: 1; running: false; repeat: false
+            onTriggered: {
+                image.source = ""
+                timTwo.start()
+            }
+        }
+        Timer {
+            id: timTwo
+            interval: 200; running: false; repeat: false
+            onTriggered: {
+                image.source = "https://middleware-eembf4leqa-ew.a.run.app/viz1/71afee9f-a446-456c-a18a-f3406c0b77c8"
+                image.visible = true
+            }
+        }
     }
     Label{
         x: 370
@@ -112,11 +130,39 @@ Rectangle {
                     x: 70
                     y: 5
                     height: 40
-                    source: "file:///" + applicationDirPath + "/images/herz.png"
+                    source: "qrc:/images/herz.png"
                     fillMode: Image.PreserveAspectFit
                 }
             }
         text: herz
+        font.bold: true
+        font.pixelSize: 25
+        color: "#000000"
+        horizontalAlignment: "AlignHCenter"
+        verticalAlignment: "AlignVCenter"
+    }
+    Label{
+        x: 130
+        y: 10
+        width:180
+        height:50
+        background:
+            Rectangle{
+                x: 20
+                width: parent.width
+                radius: 10
+                color: "#ffdfc7"
+                Image{
+                    smooth: false
+                    x: 125
+                    y: 8
+                    height: 34
+                    source: "qrc:/images/heatify.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+            }
+        text: "Heatify"
+        font.italic: true
         font.bold: true
         font.pixelSize: 25
         color: "#000000"
@@ -373,11 +419,12 @@ Rectangle {
                             maximumTemperatureInCelsius: maxTemp,
                             electricityPersonalitySpartanToDecadent: profile
                         }));
+                        tim.start()
                         disableOverlay.start()
                     }
                     Timer {
                         id: disableOverlay
-                        interval: 500; running: false; repeat: false
+                        interval: 750; running: false; repeat: false
                         onTriggered: overlay.visible = false
                         }
                     text: "Save"
@@ -391,7 +438,7 @@ Rectangle {
                     background:
                             Image{
                                 id: modeOne
-                                source: "file:///" + applicationDirPath + "/images/winter3.svg"
+                                source: "qrc:/images/winter3.svg"
                                 anchors.fill: parent
                             }
                     onClicked: {
@@ -409,7 +456,7 @@ Rectangle {
                     background:
                         Image{
                             id:modeTwo
-                            source: "file:///" + applicationDirPath + "/images/autumn3.svg"
+                            source: "qrc:/images/autumn3.svg"
                             anchors.fill: parent
                         }
                     onClicked: {
@@ -427,7 +474,7 @@ Rectangle {
                     background:
                         Image{
                             id:modeThree
-                            source: "file:///" + applicationDirPath + "/images/beach.svg"
+                            source: "qrc:/images/beach.svg"
                             anchors.fill: parent
                         }
                     onClicked: {
@@ -472,54 +519,110 @@ Rectangle {
                     y: 60
                     width: 230
                     height: 230
-                    color: "#f46c1c"
+                    color: "#ffdfc7"
                     radius: 10
+                    Label{
+                        y: 5
+                        width: 230
+                        height: 30
+                        text: "My Score:"
+                        font.bold: true
+                        font.pixelSize: 20
+                        horizontalAlignment: "AlignHCenter"
+                        color: "#000000"
+                    }
+                    Image {
+                        y: 40
+                        width: 230
+                        source: "https://middleware-eembf4leqa-ew.a.run.app/viz2/71afee9f-a446-456c-a18a-f3406c0b77c8"
+                        fillMode: Image.PreserveAspectFit
+                    }
                 }
-                Image {
-                    x: 15
-                    y: 60
-                    width: 230
-                    source: "https://middleware-eembf4leqa-ew.a.run.app/viz2/71afee9f-a446-456c-a18a-f3406c0b77c8"
-                    fillMode: Image.PreserveAspectFit
-                }
-
-                ListView {
+                Rectangle {
                     x: 255
                     y: 60
                     width: 230
+                    height: 40
+                    color: "#ffdfc7"
+                    radius: 10
+                    Label{
+                        y: 5
+                        width: 230
+                        height: 30
+                        text: "Squad:"
+                        font.bold: true
+                        font.pixelSize: 20
+                        horizontalAlignment: "AlignHCenter"
+                        color: "#000000"
+                    }
+                }
+                ListView {
+                    x: 255
+                    y: 110
+                    width: 230
                     height: 470
-                    interactive: false
+                    highlightRangeMode: ListView.StrictlyEnforceRange
+                    preferredHighlightBegin: 0
+                    highlightFollowsCurrentItem: true
+                    highlightMoveDuration: 500
+                    highlightMoveVelocity: -1
+                    clip: true
+                    //interactive: false
                     model:
                     ListModel {
+                        id: friendsModel
+
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "John Stone"
+                            fScore: 204
                         }
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "Ponnappa Priya"
+                            fScore: 169
                         }
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "Peter Stanbridge"
+                            fScore: 150
                         }
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "Natalie Lee-Walsh"
+                            fScore: 116
                         }
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "Ang Li"
+                            fScore: 103
                         }
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "Verona Blair"
+                            fScore: 92
                         }
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "Andrew Kazantzis"
+                            fScore: 86
                         }
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "Trevor Virtue"
+                            fScore: 69
                         }
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "Tamzyn French"
+                            fScore: 45
                         }
                         ListElement {
-                            fName: "Max Musterman"
+                            fName: "Salome Simoes"
+                            fScore: 18
+                        }
+                        ListElement {
+                            fName: "Tarryn Campbell-Gillies"
+                            fScore: 14
+                        }
+                        ListElement {
+                            fName: "Nguta Ithya"
+                            fScore: 10
+                        }
+                        ListElement {
+                            fname: "Eugenia Anders"
+                            fScore: 5
                         }
                     }
                     delegate:
@@ -542,6 +645,15 @@ Rectangle {
                             verticalAlignment: "AlignVCenter"
                             text: fName
                         }
+                        Label {
+                            width: 180
+                            height: 30
+                            x: 40
+                            color: "#000000"
+                            horizontalAlignment: "AlignRight"
+                            verticalAlignment: "AlignVCenter"
+                            text: fScore
+                        }
                         width: 230
                         height: 30
                         color: index % 2 == 0 ? "#ffdfc7" : "#55ffdfc7"
@@ -551,16 +663,85 @@ Rectangle {
                         width: 230
                         height: 170
                         color: "#ffdfc7"
+                        Label {
+                            y: 15
+                            x: 10
+                            width: 230
+                            height: 30
+                            color: "#000000"
+                            horizontalAlignment: "AlignLeft"
+                            verticalAlignment: "AlignVCenter"
+                            text: "Total:"
+                            font.bold: true
+                        }
+                        Label {
+                            x: 10
+                            y: 15
+                            width: 210
+                            height: 30
+                            color: "#000000"
+                            horizontalAlignment: "AlignRight"
+                            verticalAlignment: "AlignVCenter"
+                            property int totScore : 0
+                            text: totScore
+                            font.bold: true
+                            Component.onCompleted: {
+                                for(var i = 0; i < friendsModel.count; i++){
+                                    totScore += friendsModel.get(i).fScore;
+                                }
+
+                            }
+                        }
                     }
+
                 }
 
-                Rectangle{
+                Button{
                     x: 15
                     y: 300
                     width: 230
                     height: 230
-                    radius: 10
-                    color: "#ffdfc7"
+                    background: Rectangle{
+                        radius: 10
+                        color: parent.down ? "#55f46c1c" : "#fff46c1c"
+                    }
+                    Image{
+                        height: 200
+                        width: 200
+                        x: 15
+                        source: "qrc:/images/eff.png"
+                    }
+                    Label{
+                        y: 180
+                        width: 230
+                        height: 30
+                        text: "Community Forums"
+                        font.bold: true
+                        font.pixelSize: 20
+                        horizontalAlignment: "AlignHCenter"
+                        color: "#000000"
+                    }
+                }
+                Button{
+                    x: 15
+                    y: 540
+                    width: 230
+                    height: 40
+                    background: Rectangle{
+                        radius: 10
+                        color: parent.down ? "#55f46c1c" : "#fff46c1c"
+                    }
+                    Label{
+                        anchors.fill: parent.anchors
+                        width: 230
+                        height: 40
+                        text: "Claim Your Reward!"
+                        font.bold: true
+                        font.pixelSize: 20
+                        horizontalAlignment: "AlignHCenter"
+                        verticalAlignment: "AlignVCenter"
+                        color: "#000000"
+                    }
                 }
             }
                 currentIndex: 0

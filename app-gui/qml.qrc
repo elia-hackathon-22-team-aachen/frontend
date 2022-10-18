@@ -3,5 +3,12 @@
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>Controlls.qml</file>
+        <file>images/autumn3.svg</file>
+        <file>images/beach.svg</file>
+        <file>images/costs.svg</file>
+        <file>images/eff.png</file>
+        <file>images/herz.png</file>
+        <file>images/winter3.svg</file>
+        <file>images/heatify.png</file>
     </qresource>
 </RCC>
